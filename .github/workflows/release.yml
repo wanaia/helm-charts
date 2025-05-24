@@ -16,31 +16,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Aggregate all Charts to charts
-        run: |
-          rm -rf charts
-          mkdir -p charts
-          find . -name Chart.yaml ! -path "*/charts/*" | while read chart; do
-            chartDir=$(dirname "$chart")
-            name=$(basename "$chartDir")
-            cp -r "$chartDir" "charts/$name"
-          done
-
-      - name: Configure Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
       - name: install helm
         uses: azure/setup-helm@v4.3.0
         with:
           version: v3.8.1
 
-      - name: Release Helm Charts
-        uses: helm/chart-releaser-action@v1.7.0
+      - name: package charts
+        run: |
+          mkdir -p packaged-charts
+          find . -name Chart.yaml ! -path "*/charts/*" | while read chart; do
+            chartDir=$(dirname "$chart")
+            helm package "$chartDir" -d packaged-charts
+          done
+
+      - name: generate index.yaml
+        run: |
+          cd packaged-charts
+          helm repo index . --url https://wanaia.github.io/helm-charts
+          cd ..
+
+      - name: deploy gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          charts_dir: charts
-        env:
-          CR_TOKEN: "${{ secrets.RUNNER_GITHUB_TOKEN }}"
-          CR_GENERATE_RELEASE_NOTES: true
-          CR_SKIP_EXISTING: false
+          github_token: ${{ secrets.RUNNER_GITHUB_TOKEN }}
+          publish_dir: ./packaged-charts

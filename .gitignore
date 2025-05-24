@@ -12,4 +12,4 @@
 *.vsix
 
 # Charts
-charts/
+packaged-charts/
