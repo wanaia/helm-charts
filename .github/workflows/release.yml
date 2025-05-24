@@ -24,6 +24,7 @@ jobs:
             chartDir=$(dirname "$chart")
             name=$(basename "$chartDir")
             cp -r "$chartDir" "charts/$name"
+            ls -la charts
           done
 
       - name: Configure Git
