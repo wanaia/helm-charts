@@ -20,7 +20,7 @@ jobs:
         run: |
           rm -rf charts
           mkdir -p charts
-          find . -name Chart.yaml | while read chart; do
+          find . -name Chart.yaml ! -path "*/charts/*" | while read chart; do
             chartDir=$(dirname "$chart")
             name=$(basename "$chartDir")
             cp -r "$chartDir" "charts/$name"
