@@ -3,24 +3,13 @@ clusterName: wanaia-rook-ceph
 kubeVersion:
 configOverride:
 toolbox:
-  enabled: false
-  image: #quay.io/ceph/ceph:v19.2.2
-  tolerations: []
-  affinity: {}
-  containerSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 2016
-    runAsGroup: 2016
-    capabilities:
-      drop: ["ALL"]
+  enabled: true
   resources:
     limits:
-      memory: "1Gi"
+      memory: "100Mi"
     requests:
       cpu: "100m"
-      memory: "128Mi"
-  priorityClassName:
-
+      memory: "50Mi"
 monitoring:
   enabled: false
   metricsDisabled: false
@@ -30,9 +19,6 @@ monitoring:
     labels: {}
     annotations: {}
 cephClusterSpec:
-  cephVersion:
-    image: quay.io/ceph/ceph:v19.2.2
-    allowUnsupported: false
   dataDirHostPath: /var/lib/rook
   skipUpgradeChecks: false
   continueUpgradeAfterChecksEvenIfNotHealthy: false
@@ -72,25 +58,25 @@ cephClusterSpec:
   resources:
     mgr:
       limits:
-        memory: "1Gi"
+        memory: "500Mi"
       requests:
-        cpu: "500m"
-        memory: "512Mi"
+        cpu: "100m"
+        memory: "128Mi"
     mon:
       limits:
-        memory: "1Gi"
+        memory: "500Mi"
       requests:
-        cpu: "500m"
-        memory: "512Mi"
+        cpu: "100m"
+        memory: "128Mi"
     osd:
       limits:
-        memory: "1Gi"
+        memory: "500Mi"
       requests:
-        cpu: "500m"
-        memory: "512Mi"
+        cpu: "100m"
+        memory: "128Mi"
     prepareosd:
       requests:
-        cpu: "500m"
+        cpu: "100m"
         memory: "50Mi"
     mgr-sidecar:
       limits:
@@ -114,7 +100,7 @@ cephClusterSpec:
       limits:
         memory: "1Gi"
       requests:
-        cpu: "500m"
+        cpu: "100m"
         memory: "100Mi"
     exporter:
       limits:
@@ -122,39 +108,13 @@ cephClusterSpec:
       requests:
         cpu: "50m"
         memory: "50Mi"
-
   removeOSDsIfOutAndSafeToRemove: false
-
-  priorityClassNames:
-    mon: system-node-critical
-    osd: system-node-critical
-    mgr: system-cluster-critical
-
   storage:
     useAllNodes: true
     useAllDevices: true
   disruptionManagement:
     managePodBudgets: true
     osdMaintenanceTimeout: 30
-
-  healthCheck:
-    daemonHealth:
-      mon:
-        disabled: false
-        interval: 45s
-      osd:
-        disabled: false
-        interval: 60s
-      status:
-        disabled: false
-        interval: 60s
-    livenessProbe:
-      mon:
-        disabled: false
-      mgr:
-        disabled: false
-      osd:
-        disabled: false
 cephBlockPools:
   - name: ceph-blockpool
     spec:
@@ -199,10 +159,10 @@ cephFileSystems:
         activeStandby: true
         resources:
           limits:
-            memory: "1Gi"
+            memory: "500Mi"
           requests:
-            cpu: "500m"
-            memory: "1Gi"
+            cpu: "100m"
+            memory: "128Mi"
         priorityClassName: system-cluster-critical
     storageClass:
       enabled: true
@@ -232,7 +192,6 @@ cephFileSystemVolumeSnapshotClass:
   annotations: {}
   labels: {}
   parameters: {}
-
 cephBlockPoolsVolumeSnapshotClass:
   enabled: false
   name: ceph-block
@@ -261,10 +220,10 @@ cephObjectStores:
         port: 80
         resources:
           limits:
-            memory: "1Gi"
+            memory: "500Mi"
           requests:
-            cpu: "500m"
-            memory: "512Mi"
+            cpu: "100m"
+            memory: "128Mi"
         instances: 1
         priorityClassName: system-cluster-critical
     storageClass:
