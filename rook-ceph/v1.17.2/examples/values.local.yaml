@@ -1,6 +1,6 @@
 crds:
   # **WARNING** Only set during first deployment. If later disabled the cluster may be DESTROYED.
-  enabled: true
+  enabled: false
 
 resources:
   limits:
@@ -13,7 +13,7 @@ currentNamespaceOnly: false
 operatorPodLabels: {}
 annotations: {}
 logLevel: INFO
-priorityClassName:
+priorityClassName: system-cluster-critical
 csi:
   enableRbdDriver: true
   enableCephfsDriver: true
@@ -36,7 +36,7 @@ csi:
 
   provisionerReplicas: 2
 
-  clusterName:
+  clusterName: wanaia-rook-ceph
 
   logLevel: 0
 

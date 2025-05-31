@@ -2,11 +2,8 @@ repositories:
   - name: wanaia
     url: https://wanaia.github.io/helm-charts/
 
-releases:
-  - name: rook-ceph
-    namespace: rook-ceph
-    createNamespace: true
-    chart: wanaia/rook-ceph
-    version: v1.17.2
-    values:
-      - rook-ceph/v1.17.2/examples/values.yaml
+helmfiles:
+  - path: storage/helmfile.yaml
+    selectors:
+      - component=rook-ceph
+      - component=rook-ceph-cluster
