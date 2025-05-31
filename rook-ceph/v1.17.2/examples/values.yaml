@@ -1,0 +1,157 @@
+crds:
+  # **WARNING** Only set during first deployment. If later disabled the cluster may be DESTROYED.
+  enabled: true
+
+resources:
+  limits:
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 128Mi
+unreachableNodeTolerationSeconds: 5
+currentNamespaceOnly: false
+operatorPodLabels: {}
+annotations: {}
+logLevel: INFO
+priorityClassName:
+csi:
+  enableRbdDriver: true
+  enableCephfsDriver: true
+  disableCsiDriver: "false"
+  enableCSIHostNetwork: true
+  enableCephfsSnapshotter: true
+  enableNFSSnapshotter: true
+  enableRBDSnapshotter: true
+  enablePluginSelinuxHostMount: false
+  enableCSIEncryption: false
+  enableVolumeGroupSnapshot: true
+  pluginPriorityClassName: system-node-critical
+  provisionerPriorityClassName: system-cluster-critical
+
+  enableOMAPGenerator: false
+
+  cephFSKernelMountOptions:
+
+  enableMetadata: false
+
+  provisionerReplicas: 2
+
+  clusterName:
+
+  logLevel: 0
+
+  sidecarLogLevel:
+
+  csiDriverNamePrefix:
+
+  rbdPluginUpdateStrategy:
+
+  rbdPluginUpdateStrategyMaxUnavailable:
+
+  cephFSPluginUpdateStrategy:
+
+  cephFSPluginUpdateStrategyMaxUnavailable:
+
+  nfsPluginUpdateStrategy:
+
+  grpcTimeoutInSeconds: 150
+
+  kubeApiBurst:
+
+  kubeApiQPS:
+
+  csiRBDPluginVolume:
+
+  csiRBDPluginVolumeMount:
+
+  csiCephFSPluginVolume:
+
+  csiCephFSPluginVolumeMount:
+  provisionerTolerations:
+  provisionerNodeAffinity:
+
+  pluginTolerations:
+  pluginNodeAffinity:
+
+  enableLiveness: false
+
+  cephfsLivenessMetricsPort:
+
+  csiAddonsPort:
+  csiAddonsRBDProvisionerPort:
+  csiAddonsCephFSProvisionerPort:
+
+  forceCephFSKernelClient: true
+
+  rbdLivenessMetricsPort:
+
+  serviceMonitor:
+    enabled: false
+    interval: 10s
+    labels: {}
+    namespace:
+
+  kubeletDirPath:
+
+  csiLeaderElectionLeaseDuration:
+
+  csiLeaderElectionRenewDeadline:
+
+  csiLeaderElectionRetryPeriod:
+  cephfsPodLabels:
+
+  nfsPodLabels:
+
+  rbdPodLabels:
+
+  nfs:
+    enabled: false
+
+  topology:
+    enabled: false
+    domainLabels:
+
+  cephFSAttachRequired: true
+  rbdAttachRequired: true
+  nfsAttachRequired: true
+
+enableDiscoveryDaemon: false
+discoveryDaemonInterval: 60m
+
+cephCommandsTimeoutSeconds: "15"
+
+useOperatorHostNetwork:
+
+scaleDownOperator: false
+
+discover:
+  toleration:
+  tolerationKey:
+  tolerations:
+  nodeAffinity:
+
+  podLabels: # "key1=value1,key2=value2"
+  resources:
+
+customHostnameLabel:
+
+hostpathRequiresPrivileged: false
+
+enforceHostNetwork: false
+
+disableDeviceHotplug: false
+
+revisionHistoryLimit:
+
+discoverDaemonUdev:
+
+imagePullSecrets:
+
+enableOBCWatchOperatorNamespace: true
+
+obcProvisionerNamePrefix:
+
+obcAllowAdditionalConfigFields: "maxObjects,maxSize"
+
+monitoring:
+  enabled: false
