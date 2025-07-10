@@ -10,7 +10,7 @@ entries:
         url: https://argoproj.github.io/argo-helm/pgp_keys.asc
     apiVersion: v2
     appVersion: v3.0.3
-    created: "2025-07-10T19:23:48.625715916Z"
+    created: "2025-07-10T19:24:52.378642535Z"
     dependencies:
     - condition: redis-ha.enabled
       name: redis-ha
@@ -18,7 +18,7 @@ entries:
       version: 4.33.2
     description: A Helm chart for Argo CD, a declarative, GitOps continuous delivery
       tool for Kubernetes.
-    digest: dec7182301f86438b23b017d4e99502a9649453f7003715d3f33c93e453e7ffb
+    digest: 8fa591f244daf922ecef913fab7810366d4dc7b53f74b61f901782dad7b8d02c
     home: https://github.com/argoproj/argo-helm
     icon: https://argo-cd.readthedocs.io/en/stable/assets/logo.png
     keywords:
@@ -46,9 +46,9 @@ entries:
         url: https://argoproj.github.io/argo-helm/pgp_keys.asc
     apiVersion: v2
     appVersion: v1.8.2
-    created: "2025-07-10T19:23:48.62921766Z"
+    created: "2025-07-10T19:24:52.382229897Z"
     description: A Helm chart for Argo Rollouts
-    digest: cd2789489fbfe7acce5080ab7f17b7b37733ec4767bb5633a25baafbbc563feb
+    digest: ddff48f335678bf44d5d45e319deb9de76eca4cc7a32844fd987afb013089599
     home: https://github.com/argoproj/argo-helm
     icon: https://argoproj.github.io/argo-rollouts/assets/logo.png
     keywords:
@@ -73,9 +73,9 @@ entries:
         url: https://argoproj.github.io/argo-helm/pgp_keys.asc
     apiVersion: v2
     appVersion: v3.6.7
-    created: "2025-07-10T19:23:48.631855931Z"
+    created: "2025-07-10T19:24:52.384347239Z"
     description: A Helm chart for Argo Workflows
-    digest: 4692c424d2d1808ce0fdfed8101dd6cd703a0bd0f42b8838f8204ec364319080
+    digest: 99f57adc5f24da777b9837e7253b7fa1bce9e27f5f1f34f55a41e1c978de57e8
     home: https://github.com/argoproj/argo-helm
     icon: https://argo-workflows.readthedocs.io/en/stable/assets/logo.png
     maintainers:
@@ -100,7 +100,7 @@ entries:
       tanzuCategory: service
     apiVersion: v2
     appVersion: 3.6.0
-    created: "2025-07-10T19:23:48.635168435Z"
+    created: "2025-07-10T19:24:52.38816273Z"
     dependencies:
     - name: common
       repository: oci://registry-1.docker.io/bitnamicharts
@@ -110,7 +110,7 @@ entries:
     description: etcd is a distributed key-value store designed to securely store
       data across a cluster. etcd is widely used in production on account of its reliability,
       fault-tolerance and ease of use.
-    digest: 0a3209cabca7a7dc93b71e81377b75eb2cb4d3feafbfbcf2af1ef261292c9359
+    digest: 1a875f2059fd454b4047361d5a7f5ae03793b39a0174111e9683b0ee9357112d
     home: https://bitnami.com
     icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/etcd/img/etcd-stack-220x234.png
     keywords:
@@ -131,9 +131,9 @@ entries:
   jaeger-operator:
   - apiVersion: v1
     appVersion: 1.61.0
-    created: "2025-07-10T19:23:48.637337049Z"
+    created: "2025-07-10T19:24:52.38961655Z"
     description: jaeger-operator Helm chart for Kubernetes
-    digest: cd391cc105d673df45c2904b9d41d1f4e854e927e53272a18052d6b3561e60d8
+    digest: 320ef6874aeb74aa95bd28a4ed302de811d878929142405bf519e4b937170218
     home: https://www.jaegertracing.io/
     icon: https://www.jaegertracing.io/img/jaeger-icon-reverse-color.svg
     maintainers:
@@ -149,7 +149,7 @@ entries:
     version: 2.57.0
   kagent:
   - apiVersion: v2
-    created: "2025-07-10T19:23:48.639663171Z"
+    created: "2025-07-10T19:24:52.392589665Z"
     dependencies:
     - condition: k8s-agent.enabled
       name: k8s-agent
@@ -192,7 +192,7 @@ entries:
       repository: file://../agents/cilium-debug
       version: 0.4.1
     description: A Helm chart for kagent, built with Autogen
-    digest: 6514b9dd74c8e74ff1f204c8fc04554261a0d22f1a398ec240a46e871b17bae3
+    digest: 936d9d35ff1a09e5e05b72c97fe7b892c8f61c6dd9146bb4e51e1cc57a91586d
     name: kagent
     type: application
     urls:
@@ -201,9 +201,9 @@ entries:
   keda:
   - apiVersion: v2
     appVersion: 2.17.1
-    created: "2025-07-10T19:23:48.644412437Z"
+    created: "2025-07-10T19:24:52.397189688Z"
     description: Event-based autoscaler for workloads on Kubernetes
-    digest: c6b7ce00c30d22618d57e1e9e243e57e2bafbefa41f49e67d74dd0c69977f5fd
+    digest: 6fdfd8e46eb037abe21c84ea0a720321de33cca70de6e148b5cb45404948662c
     home: https://github.com/kedacore/keda
     icon: https://raw.githubusercontent.com/kedacore/keda/main/images/keda-logo-500x500-white.png
     kubeVersion: '>=v1.23.0-0'
@@ -233,7 +233,7 @@ entries:
       artifacthub.io/operator: "true"
     apiVersion: v2
     appVersion: v0.82.2
-    created: "2025-07-10T19:23:48.673570735Z"
+    created: "2025-07-10T19:24:52.425828071Z"
     dependencies:
     - condition: crds.enabled
       name: crds
@@ -259,7 +259,7 @@ entries:
       and Prometheus rules combined with documentation and scripts to provide easy
       to operate end-to-end Kubernetes cluster monitoring with Prometheus using the
       Prometheus Operator.
-    digest: 6f3a46c414f0e3590a7163d63f78aaf186bd82a7054bbb40cb15059ba2c1a719
+    digest: f1fdfb49a0e273e476d8f7a596f174229d5af4b942517fbe861efcaf7480d76d
     home: https://github.com/prometheus-operator/kube-prometheus
     icon: https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png
     keywords:
@@ -303,9 +303,9 @@ entries:
   kube-vip:
   - apiVersion: v2
     appVersion: v0.8.9
-    created: "2025-07-10T19:23:48.673956473Z"
+    created: "2025-07-10T19:24:52.426223877Z"
     description: A Helm chart for kube-vip
-    digest: 55c642d191374017aae96e0b062b477f1dd6f78cbdccba7599379ca625366e79
+    digest: 43d391980d9bde67a4aa9670feb97d684ef82329c9488e81afd686b8fc674bca
     icon: https://github.com/kube-vip/kube-vip/raw/main/kube-vip.png
     maintainers:
     - name: kube-vip
@@ -327,10 +327,10 @@ entries:
           description: "Fixed nanny's RoleBinding which contained a hard-coded namespace instead of the Helm's release namespace."
     apiVersion: v2
     appVersion: 0.7.2
-    created: "2025-07-10T19:23:48.67481302Z"
+    created: "2025-07-10T19:24:52.427092665Z"
     description: Metrics Server is a scalable, efficient source of container resource
       metrics for Kubernetes built-in autoscaling pipelines.
-    digest: d6fefdf88e5387e8a4abb9fbe88ef80e8f48cfa02c3156b270e8192e7d13c3ad
+    digest: 2ae1e2c8b3c69d8f5d748df5ea5bc1a5d5c3932f37739f2766c01429f9ba3ea1
     home: https://github.com/kubernetes-sigs/metrics-server
     icon: https://avatars.githubusercontent.com/u/36015203?s=400&v=4
     keywords:
@@ -361,7 +361,7 @@ entries:
           url: https://github.com/prometheus/prometheus
     apiVersion: v2
     appVersion: v3.4.0
-    created: "2025-07-10T19:23:48.681626303Z"
+    created: "2025-07-10T19:24:52.433834143Z"
     dependencies:
     - condition: alertmanager.enabled
       name: alertmanager
@@ -380,7 +380,7 @@ entries:
       repository: https://prometheus-community.github.io/helm-charts
       version: 3.2.*
     description: Prometheus is a monitoring system and time series database.
-    digest: 1aaedfdc394521a5f8247a6a766024f72e5bc4e0246bb4c284cec4c7ca9cf2ec
+    digest: fa5adbe906e4809463dbf5076a8407d3ad6afdea29c84c14a898c88cbe07b239
     home: https://prometheus.io/
     icon: https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png
     keywords:
@@ -422,9 +422,9 @@ entries:
           url: https://github.com/prometheus-community/helm-charts
     apiVersion: v2
     appVersion: 1.9.1
-    created: "2025-07-10T19:23:48.682868829Z"
+    created: "2025-07-10T19:24:52.435195679Z"
     description: A Helm chart for prometheus node-exporter
-    digest: 2f8fb3ac2a11591181e73c3559325f744b007472ad9dd5810777f4d7542cb0ea
+    digest: ccfc7c3eafda99e2397fc93cfc4df833154ea2bf848927b92a2328405db49fbc
     home: https://github.com/prometheus/node_exporter/
     keywords:
     - node-exporter
@@ -457,9 +457,9 @@ entries:
               url: https://redis.io/docs/latest/operate/kubernetes/release-notes/
     apiVersion: v2
     appVersion: 7.22.0-7
-    created: "2025-07-10T19:23:48.683299211Z"
+    created: "2025-07-10T19:24:52.435597767Z"
     description: A Helm chart for Redis Enterprise Operator for Kubernetes
-    digest: 0d4957c7e358c5df7042edc3194e9bb1afe3c941d3464d25a84bc58a4b6c85ba
+    digest: ee7b0630cd81e0461b2a5aab3c42511aa4c20cabc7bbcc7667d53e619107efcf
     home: https://redis.com
     icon: https://redis.io/wp-content/uploads/2024/04/Logotype.svg
     keywords:
@@ -476,13 +476,13 @@ entries:
   rook-ceph:
   - apiVersion: v2
     appVersion: v1.17.2
-    created: "2025-07-10T19:23:48.689335629Z"
+    created: "2025-07-10T19:24:52.441397209Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.0.1
     description: File, Block, and Object Storage Services for your Cloud-Native Environment
-    digest: 2adc374ac0a6de5cc7b33afb47180acbee8620b4a8a40bebf03e0f734e1f1d36
+    digest: 856ccd0a476acde1b04767b219049a560b22bfc15f20c30981e283c0ddf15be0
     icon: https://rook.io/images/rook-logo.svg
     name: rook-ceph
     sources:
@@ -493,13 +493,13 @@ entries:
   rook-ceph-cluster:
   - apiVersion: v2
     appVersion: v1.17.2
-    created: "2025-07-10T19:23:48.68523704Z"
+    created: "2025-07-10T19:24:52.437332167Z"
     dependencies:
     - name: library
       repository: file://../library
       version: 0.0.1
     description: Manages a single Ceph cluster namespace for Rook
-    digest: 9341acaef7ba035462f81d16b1b99035201b7927ab6c45ff9be1bb9c5f11d6a8
+    digest: ebc5895e5e49b324c8e65807173a760a721613a0c88e3e331526ce7d41a0cdf3
     icon: https://rook.io/images/rook-logo.svg
     name: rook-ceph-cluster
     sources:
@@ -526,7 +526,7 @@ entries:
       artifacthub.io/operator: "true"
     apiVersion: v2
     appVersion: v1.117.1
-    created: "2025-07-10T19:23:48.713172024Z"
+    created: "2025-07-10T19:24:52.464767622Z"
     dependencies:
     - name: victoria-metrics-common
       repository: https://victoriametrics.github.io/helm-charts
@@ -549,7 +549,7 @@ entries:
       version: 8.11.*
     description: Kubernetes monitoring on VictoriaMetrics stack. Includes VictoriaMetrics
       Operator, Grafana dashboards, ServiceScrapes and VMRules
-    digest: 8d9f16e55735f01711e9f9763f280bad21b7cac6a4b20c37be3ffba25aeba1af
+    digest: fec17190b5516fabc7eab3c0d91b918973dad8b7271038af02d3e54e3e943dc2
     home: https://github.com/VictoriaMetrics/helm-charts
     icon: https://avatars.githubusercontent.com/u/43720803?s=200&v=4
     keywords:
@@ -570,4 +570,4 @@ entries:
     urls:
     - https://wanaia.github.io/helm-charts/victoria-metrics-k8s-stack-0.48.1.tgz
     version: 0.48.1
-generated: "2025-07-10T19:23:48.613926344Z"
+generated: "2025-07-10T19:24:52.366813209Z"
