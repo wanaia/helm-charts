@@ -7,4 +7,4 @@ releases:
     labels:
       component: ingress-nginx
     values:
-      - ../../ingress-nginx/4.13.0/examples/values.{{ requiredEnv "COMPONENT_ENV" }}.yaml
+      - values.{{ requiredEnv "COMPONENT_ENV" }}.yaml
