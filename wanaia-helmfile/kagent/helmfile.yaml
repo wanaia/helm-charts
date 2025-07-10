@@ -8,12 +8,19 @@ releases:
       component: jaeger-operator
     values:
       - ../../jaeger-operator/2.57.0/examples/values.{{ requiredEnv "COMPONENT_ENV" }}.yaml
+  - name: kagent-crds
+    namespace: kagent
+    createNamespace: true
+    chart: wanaia/kagent-crds
+    version: 0.4.1
+    labels:
+      component: kagent-crds
   - name: kagent
     namespace: kagent
     createNamespace: true
     chart: wanaia/kagent
-    version: v0.4.1
+    version: 0.4.1
     labels:
       component: kagent
     values:
-      - ../../kagent/v0.4.1/examples/values.{{ requiredEnv "COMPONENT_ENV" }}.yaml
+      - ../../kagent/0.4.1/examples/values.{{ requiredEnv "COMPONENT_ENV" }}.yaml

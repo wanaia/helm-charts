@@ -7,8 +7,12 @@ helmfiles:
   #   selectors:
   #     - component=rook-ceph
   #     - component=rook-ceph-cluster
+  - path: ingress-nginx/helmfile.yaml
+    selectors:
+      - component=ingress-nginx
   - path: kagent/helmfile.yaml
     selectors:
+      - component=kagent-crds
       - component=kagent
       - component=jaeger-operator
 # export COMPONENT_ENV=local
