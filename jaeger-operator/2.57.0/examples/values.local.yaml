@@ -1,0 +1,25 @@
+jaeger:
+  create: true
+  namespace: observability
+  spec:
+    strategy: production
+    storage:
+      type: elasticsearch
+      options:
+        es:
+          server-urls: http://elasticsearch:9200
+          username: elastic
+          password: .HuNc78iQV
+
+service:
+  type: NodePort
+  nodePort: 32500
+replicaCount: 1
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
