@@ -149,27 +149,6 @@ service:
       port: 8085
       targetPort: 8085
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-# -- Override the namespace
-# @default -- `.Release.Namespace`
-namespaceOverride: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
 otel:
   tracing:
     enabled: false

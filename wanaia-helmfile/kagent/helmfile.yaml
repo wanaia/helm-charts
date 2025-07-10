@@ -1,4 +1,13 @@
 releases:
+  - name: jaeger-operator
+    namespace: observability
+    createNamespace: true
+    chart: wanaia/jaeger-operator
+    version: 2.57.0
+    labels:
+      component: jaeger-operator
+    values:
+      - ../../jaeger-operator/2.57.0/examples/values.{{ requiredEnv "COMPONENT_ENV" }}.yaml
   - name: kagent
     namespace: kagent
     createNamespace: true

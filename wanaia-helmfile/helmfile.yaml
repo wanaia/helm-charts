@@ -10,5 +10,6 @@ helmfiles:
   - path: kagent/helmfile.yaml
     selectors:
       - component=kagent
+      - component=jaeger-operator
 # export COMPONENT_ENV=local
 # helmfile apply -f wanaia-helmfile/helmfile.yaml
