@@ -1,37 +1,37 @@
 apiVersion: v2
 dependencies:
-- condition: k8s-agent.enabled
-  name: k8s-agent
-  repository: file://../agents/k8s
-  version: 0.3.9
-- condition: kgateway-agent.enabled
-  name: kgateway-agent
-  repository: file://../agents/kgateway
-  version: 0.3.9
-- condition: istio-agent.enabled
-  name: istio-agent
-  repository: file://../agents/istio
-  version: 0.3.9
-- condition: promql-agent.enabled
-  name: promql-agent
-  repository: file://../agents/promql
-  version: 0.3.9
-- condition: observability-agent.enabled
-  name: observability-agent
-  repository: file://../agents/observability
-  version: 0.3.9
-- condition: argo-rollouts-agent.enabled
-  name: argo-rollouts-agent
-  repository: file://../agents/argo-rollouts
-  version: 0.3.9
-- condition: helm-agent.enabled
-  name: helm-agent
-  repository: file://../agents/helm
-  version: 0.3.9
-- condition: cilium-crd-agent.enabled
-  name: cilium-crd-agent
-  repository: file://../agents/cilium-crd
-  version: 0.3.9
+  - condition: k8s-agent.enabled
+    name: k8s-agent
+    repository: file://../agents/k8s
+    version: 0.3.9
+  - condition: kgateway-agent.enabled
+    name: kgateway-agent
+    repository: file://../agents/kgateway
+    version: 0.3.9
+  - condition: istio-agent.enabled
+    name: istio-agent
+    repository: file://../agents/istio
+    version: 0.3.9
+  - condition: promql-agent.enabled
+    name: promql-agent
+    repository: file://../agents/promql
+    version: 0.3.9
+  - condition: observability-agent.enabled
+    name: observability-agent
+    repository: file://../agents/observability
+    version: 0.3.9
+  - condition: argo-rollouts-agent.enabled
+    name: argo-rollouts-agent
+    repository: file://../agents/argo-rollouts
+    version: 0.3.9
+  - condition: helm-agent.enabled
+    name: helm-agent
+    repository: file://../agents/helm
+    version: 0.3.9
+  - condition: cilium-crd-agent.enabled
+    name: cilium-crd-agent
+    repository: file://../agents/cilium-crd
+    version: 0.3.9
 description: A Helm chart for kagent, built with Autogen
 name: kagent
 type: application

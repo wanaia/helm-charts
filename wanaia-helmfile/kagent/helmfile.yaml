@@ -20,14 +20,14 @@ releases:
     namespace: kagent
     createNamespace: true
     chart: wanaia/kagent-crds
-    version: 0.4.1
+    version: 0.3.9
     labels:
       component: kagent-crds
   - name: kagent
     namespace: kagent
     createNamespace: true
     chart: wanaia/kagent
-    version: 0.4.1
+    version: 0.3.9
     labels:
       component: kagent
     values:
