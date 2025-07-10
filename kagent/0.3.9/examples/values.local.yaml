@@ -1,4 +1,4 @@
-# Default values for kagent
+# kubectl create secret generic kagent-openai -n kagent --from-literal=OPENAI_API_KEY=your_openai_api_key_here
 replicaCount: 1
 providers:
   default: openAI
@@ -17,7 +17,6 @@ controller:
     limits:
       cpu: 500m
       memory: 512Mi
-
 tools:
   loglevel: "debug"
   resources:
@@ -81,7 +80,7 @@ promql-agent:
 observability-agent:
   enabled: true
 argo-rollouts-agent:
-  enabled: true
+  enabled: false
 helm-agent:
   enabled: false
 cilium-policy-agent:

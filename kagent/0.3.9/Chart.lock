@@ -1,0 +1,27 @@
+dependencies:
+- name: k8s-agent
+  repository: file://../agents/k8s
+  version: 0.3.9
+- name: kgateway-agent
+  repository: file://../agents/kgateway
+  version: 0.3.9
+- name: istio-agent
+  repository: file://../agents/istio
+  version: 0.3.9
+- name: promql-agent
+  repository: file://../agents/promql
+  version: 0.3.9
+- name: observability-agent
+  repository: file://../agents/observability
+  version: 0.3.9
+- name: argo-rollouts-agent
+  repository: file://../agents/argo-rollouts
+  version: 0.3.9
+- name: helm-agent
+  repository: file://../agents/helm
+  version: 0.3.9
+- name: cilium-crd-agent
+  repository: file://../agents/cilium-crd
+  version: 0.3.9
+digest: sha256:898013d4f7b3d7e625cba783a6a56464a5259e9e3bb9feb2f011fa803e9e7d43
+generated: "2025-05-22T15:00:10.546291541Z"
