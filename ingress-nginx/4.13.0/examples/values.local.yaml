@@ -32,62 +32,6 @@ controller:
     nodePorts:
       http: "30080"
       https: "30043"
-  admissionWebhooks:
-    name: admission
-    annotations: {}
-    enabled: true
-    extraEnvs: []
-    failurePolicy: Fail
-    port: 8443
-    certificate: "/usr/local/certificates/cert"
-    key: "/usr/local/certificates/key"
-    namespaceSelector: {}
-    objectSelector: {}
-    labels: {}
-    service:
-      annotations: {}
-      externalIPs: []
-      loadBalancerSourceRanges: []
-      servicePort: 443
-      type: ClusterIP
-    createSecretJob:
-      name: create
-      activeDeadlineSeconds: 0
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65532
-        runAsGroup: 65532
-        allowPrivilegeEscalation: false
-        seccompProfile:
-          type: RuntimeDefault
-        capabilities:
-          drop:
-            - ALL
-        readOnlyRootFilesystem: true
-      resources: {}
-    patchWebhookJob:
-      name: patch
-      activeDeadlineSeconds: 0
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65532
-        runAsGroup: 65532
-        allowPrivilegeEscalation: false
-        seccompProfile:
-          type: RuntimeDefault
-        capabilities:
-          drop:
-            - ALL
-        readOnlyRootFilesystem: true
-      resources: {}
-    certManager:
-      enabled: false
-      rootCert:
-        duration: ""
-        revisionHistoryLimit: 0
-      admissionCert:
-        duration: ""
-        revisionHistoryLimit: 0
   metrics:
     port: 10254
     portName: metrics
