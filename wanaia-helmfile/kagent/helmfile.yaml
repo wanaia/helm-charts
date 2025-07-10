@@ -1,4 +1,12 @@
 releases:
+  - name: cert-manager
+    namespace: kube-system
+    chart: wanaia/cert-manager
+    version: v1.18.2
+    labels:
+      component: cert-manager
+    values:
+      - ../../cert-manager/v1.18.2/examples/values.{{ requiredEnv "COMPONENT_ENV" }}.yaml
   - name: jaeger-operator
     namespace: observability
     createNamespace: true
