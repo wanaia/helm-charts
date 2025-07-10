@@ -1,0 +1,10 @@
+releases:
+  - name: kagent
+    namespace: kagent
+    createNamespace: true
+    chart: wanaia/kagent
+    version: v0.4.1
+    labels:
+      component: kagent
+    values:
+      - ../../kagent/v0.4.1/examples/values.{{ requiredEnv "COMPONENT_ENV" }}.yaml

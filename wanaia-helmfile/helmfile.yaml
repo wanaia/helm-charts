@@ -3,10 +3,12 @@ repositories:
     url: https://wanaia.github.io/helm-charts/
 
 helmfiles:
-  - path: storage/helmfile.yaml
+  # - path: storage/helmfile.yaml
+  #   selectors:
+  #     - component=rook-ceph
+  #     - component=rook-ceph-cluster
+  - path: kagent/helmfile.yaml
     selectors:
-      - component=rook-ceph
-      - component=rook-ceph-cluster
-
+      - component=kagent
 # export COMPONENT_ENV=local
 # helmfile apply -f wanaia-helmfile/helmfile.yaml
