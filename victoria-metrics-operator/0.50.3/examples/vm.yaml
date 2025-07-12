@@ -1,0 +1,104 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMCluster
+metadata:
+  name: vmcluster
+  namespace: addons
+spec:
+  retentionPeriod: "1" # 保留1个月数据
+  vmstorage:
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+    # 使用临时存储，重启会丢失数据
+    # storage:
+    #   volumeClaimTemplate:
+    #     metadata:
+    #       name: data
+    #     spec:
+    #       accessModes: ["ReadWriteOnce"]
+    #       storageClassName: local-storage
+    #       resources:
+    #         requests:
+    #           storage: 20Gi
+  vmselect:
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi
+  vminsert:
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        cpu: 200m
+        memory: 512Mi
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAlertmanager
+metadata:
+  name: vmalertmanager
+  namespace: addons
+spec:
+  replicaCount: 1
+  selectAllByDefault: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAlert
+metadata:
+  name: vmalert
+  namespace: addons
+spec:
+  replicaCount: 1
+  selectAllByDefault: true
+  notifier:
+    url: http://vmalertmanager-vmalertmanager.addons.svc.cluster.local:9093
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+  remoteWrite:
+    url: http://vminsert-vmcluster.addons.svc.cluster.local:8480/insert/0/prometheus/
+  remoteRead:
+    url: http://vmselect-vmcluster.addons.svc.cluster.local:8481/select/0/prometheus/
+  datasource:
+    url: http://vmselect-vmcluster.addons.svc.cluster.local:8481/select/0/prometheus/
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAgent
+metadata:
+  name: vmagent
+  namespace: addons
+spec:
+  selectAllByDefault: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  replicaCount: 1
+  remoteWrite:
+    - url: "http://vminsert-vmcluster.addons.svc.cluster.local:8480/insert/0/prometheus/api/v1/write"

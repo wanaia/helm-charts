@@ -14,4 +14,6 @@ releases:
       - "./{{ requiredEnv "COMPONENT_NAME" }}/{{ requiredEnv "COMPONENT_VERSION" }}/examples/values.{{ env "COMPONENT_ENV" | default "local" }}.yaml"
 
 # COMPONENT_NAME=ingress-nginx COMPONENT_VERSION=4.13.0 helmfile apply -f helmfile.yaml.gotmpl
-# COMPONENT_NAME=cert-manager COMPONENT_VERSION=v1.18.2 helmfile apply -f helmfile.yaml.gotmpl
+# COMPONENT_NAME=cert-manager COMPONENT_VERSION=v1.18.2 COMPONENT_NAMESPACE=kube-system helmfile apply -f helmfile.yaml.gotmpl
+# COMPONENT_NAME=victoria-metrics-operator COMPONENT_VERSION=0.50.3 helmfile apply -f helmfile.yaml.gotmpl
+# COMPONENT_NAME=grafana COMPONENT_VERSION=9.2.10 helmfile apply -f helmfile.yaml.gotmpl
