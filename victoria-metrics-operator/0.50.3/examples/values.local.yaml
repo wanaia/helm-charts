@@ -1,0 +1,19 @@
+global:
+  cluster:
+    dnsDomain: wanaia.local.
+crds:
+  enabled: true
+replicaCount: 1
+hostNetwork: true
+logLevel: "info"
+watchNamespaces: []
+service:
+  servicePort: 8080
+  webhookPort: 9443
+admissionWebhooks:
+  enabled: true
+  certManager:
+    enabled: true
+serviceMonitor:
+  enabled: false
+  vm: true

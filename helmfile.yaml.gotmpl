@@ -1,0 +1,17 @@
+repositories:
+  - name: wanaia
+    url: https://wanaia.github.io/helm-charts/
+
+releases:
+  - name: "{{ requiredEnv "COMPONENT_NAME" }}"
+    namespace: "{{ env "COMPONENT_NAMESPACE" | default "addons" }}"
+    createNamespace: true
+    chart: "wanaia/{{ requiredEnv "COMPONENT_NAME" }}"
+    version: "{{ requiredEnv "COMPONENT_VERSION" | default "latest" }}"
+    labels:
+      component: "{{ requiredEnv "COMPONENT_NAME" }}"
+    values:
+      - "./{{ requiredEnv "COMPONENT_NAME" }}/{{ requiredEnv "COMPONENT_VERSION" }}/examples/values.{{ env "COMPONENT_ENV" | default "local" }}.yaml"
+
+# COMPONENT_NAME=ingress-nginx COMPONENT_VERSION=4.13.0 helmfile apply -f helmfile.yaml.gotmpl
+# COMPONENT_NAME=cert-manager COMPONENT_VERSION=v1.18.2 helmfile apply -f helmfile.yaml.gotmpl
