@@ -2,6 +2,12 @@ repositories:
   - name: wanaia
     url: https://wanaia.github.io/helm-charts/
 
+helmDefaults:
+  wait: true
+  skipDeps: false
+  disableValidation: true
+  timeout: 600
+
 releases:
   - name: "{{ requiredEnv "COMPONENT_NAME" }}"
     namespace: "{{ env "COMPONENT_NAMESPACE" | default "addons" }}"
@@ -13,7 +19,10 @@ releases:
     values:
       - "./{{ requiredEnv "COMPONENT_NAME" }}/{{ requiredEnv "COMPONENT_VERSION" }}/examples/values.{{ env "COMPONENT_ENV" | default "local" }}.yaml"
 
+# kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
 # COMPONENT_NAME=ingress-nginx COMPONENT_VERSION=4.13.0 helmfile apply -f helmfile.yaml.gotmpl
 # COMPONENT_NAME=cert-manager COMPONENT_VERSION=v1.18.2 COMPONENT_NAMESPACE=kube-system helmfile apply -f helmfile.yaml.gotmpl
 # COMPONENT_NAME=victoria-metrics-operator COMPONENT_VERSION=0.50.3 helmfile apply -f helmfile.yaml.gotmpl
 # COMPONENT_NAME=grafana COMPONENT_VERSION=9.2.10 helmfile apply -f helmfile.yaml.gotmpl
+# COMPONENT_NAME=victoria-metrics-k8s-stack COMPONENT_VERSION=0.56.0 helmfile apply -f helmfile.yaml.gotmpl
+# COMPONENT_NAME=metrics-server COMPONENT_VERSION=3.12.2 helmfile apply -f helmfile.yaml.gotmpl

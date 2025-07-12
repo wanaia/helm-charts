@@ -1,10 +1,7 @@
-global:
-  cluster:
-    dnsDomain: wanaia.local.
 crds:
   enabled: true
 replicaCount: 1
-hostNetwork: true
+hostNetwork: false
 logLevel: "info"
 watchNamespaces: []
 service:

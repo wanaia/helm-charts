@@ -1,0 +1,386 @@
+global:
+  clusterLabel: cluster
+tenant: "0"
+victoria-metrics-operator:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+  operator:
+    disable_prometheus_converter: false
+defaultDashboards:
+  enabled: true
+  defaultTimezone: utc
+  labels: {}
+  annotations: {}
+  grafanaOperator:
+    enabled: false
+    spec:
+      instanceSelector:
+        matchLabels:
+          dashboards: grafana
+      allowCrossNamespaceImport: false
+  dashboards:
+    victoriametrics-vmalert:
+      enabled: true
+    victoriametrics-operator:
+      enabled: true
+    node-exporter-full:
+      enabled: true
+defaultRules:
+  additionalGroupByLabels: []
+  create: true
+  group:
+    spec:
+      params: {}
+  rule:
+    spec:
+      labels: {}
+      annotations: {}
+  alerting:
+    spec:
+      labels: {}
+      annotations: {}
+  recording:
+    spec:
+      labels: {}
+      annotations: {}
+  rules: {}
+  groups:
+    etcd:
+      create: true
+      rules: {}
+    general:
+      create: true
+      rules: {}
+    k8sContainerCpuLimits:
+      create: true
+      rules: {}
+    k8sContainerCpuRequests:
+      create: true
+      rules: {}
+    k8sContainerCpuUsageSecondsTotal:
+      create: true
+      rules: {}
+    k8sContainerMemoryLimits:
+      create: true
+      rules: {}
+    k8sContainerMemoryRequests:
+      create: true
+      rules: {}
+    k8sContainerMemoryRss:
+      create: true
+      rules: {}
+    k8sContainerMemoryCache:
+      create: true
+      rules: {}
+    k8sContainerMemoryWorkingSetBytes:
+      create: true
+      rules: {}
+    k8sContainerMemorySwap:
+      create: true
+      rules: {}
+    k8sPodOwner:
+      create: true
+      rules: {}
+    k8sContainerResource:
+      create: true
+      rules: {}
+    kubeApiserver:
+      create: true
+      rules: {}
+    kubeApiserverAvailability:
+      create: true
+      rules: {}
+    kubeApiserverBurnrate:
+      create: true
+      rules: {}
+    kubeApiserverHistogram:
+      create: true
+      rules: {}
+    kubeApiserverSlos:
+      create: true
+      rules: {}
+    kubelet:
+      create: true
+      rules: {}
+    kubePrometheusGeneral:
+      create: true
+      rules: {}
+    kubePrometheusNodeRecording:
+      create: true
+      rules: {}
+    kubernetesApps:
+      create: true
+      rules: {}
+      targetNamespace: ".*"
+    kubernetesResources:
+      create: true
+      rules: {}
+    kubernetesStorage:
+      create: true
+      rules: {}
+      targetNamespace: ".*"
+    kubernetesSystem:
+      create: true
+      rules: {}
+    kubernetesSystemKubelet:
+      create: true
+      rules: {}
+    kubernetesSystemApiserver:
+      create: true
+      rules: {}
+    kubernetesSystemControllerManager:
+      create: true
+      rules: {}
+    kubeScheduler:
+      create: true
+      rules: {}
+    kubernetesSystemScheduler:
+      create: true
+      rules: {}
+    kubeStateMetrics:
+      create: true
+      rules: {}
+    nodeNetwork:
+      create: true
+      rules: {}
+    node:
+      create: true
+      rules: {}
+    vmagent:
+      create: true
+      rules: {}
+    vmsingle:
+      create: true
+      rules: {}
+    vmcluster:
+      create: true
+      rules: {}
+    vmHealth:
+      create: true
+      rules: {}
+    vmoperator:
+      create: true
+      rules: {}
+    alertmanager:
+      create: true
+      rules: {}
+  runbookUrl: https://runbooks.prometheus-operator.dev/runbooks
+  labels: {}
+  annotations: {}
+additionalVictoriaMetricsMap:
+external:
+  grafana:
+    host: ""
+    datasource: VictoriaMetrics
+  vm:
+    read:
+      url: ""
+    write:
+      url: ""
+vmsingle:
+  enabled: false
+vmcluster:
+  enabled: true
+  spec:
+    retentionPeriod: "1w"
+    replicationFactor: 1
+    vmstorage:
+      replicaCount: 1
+      storageDataPath: /vm-data
+      storage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: local-path
+            resources:
+              requests:
+                storage: 10Gi
+      resources: {}
+    vmselect:
+      enabled: true
+      replicaCount: 1
+      cacheMountPath: /select-cache
+      storage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: local-path
+            resources:
+              requests:
+                storage: 2Gi
+      resources: {}
+    vminsert:
+      enabled: true
+      port: "8480"
+      replicaCount: 1
+      extraArgs: {}
+      resources: {}
+  ingress:
+    storage:
+      enabled: true
+      ingressClassName: "nginx"
+      hosts:
+        - vmstorage.monitor.wanaia.org
+    select:
+      enabled: true
+      ingressClassName: "nginx"
+      hosts:
+        - vmselect.monitor.wanaia.org
+    insert:
+      enabled: true
+      ingressClassName: "nginx"
+      hosts:
+        - vminsert.monitor.wanaia.org
+alertmanager:
+  enabled: true
+  spec:
+    replicaCount: 1
+    port: "9093"
+    selectAllByDefault: true
+    externalURL: ""
+    routePrefix: /
+    configSecret: ""
+  useManagedConfig: false
+  config:
+    route:
+      receiver: "blackhole"
+    receivers:
+      - name: blackhole
+  monzoTemplate:
+    enabled: true
+  templateFiles:
+    {}
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - alertmanager.monitor.wanaia.org
+vmalert:
+  enabled: true
+  remoteWriteVMAgent: false
+  spec:
+    port: "8080"
+    selectAllByDefault: true
+    evaluationInterval: 20s
+    extraArgs:
+      http.pathPrefix: "/"
+    externalLabels: {}
+  templateFiles:
+    {}
+  additionalNotifierConfigs: {}
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - vmalert.monitor.wanaia.org
+vmauth:
+  enabled: false
+  labels: {}
+  annotations: {}
+  spec:
+    port: "8427"
+    unauthorizedUserAccessSpec:
+      disabled: false
+      discover_backend_ips: true
+      url_map:
+        - src_paths:
+            - '{{ .vm.read.path }}/.*'
+          url_prefix:
+            - '{{ urlJoin (omit .vm.read "path") }}/'
+        - src_paths:
+            - '{{ .vm.write.path }}/.*'
+          url_prefix:
+            - '{{ urlJoin (omit .vm.write "path") }}/'
+vmagent:
+  enabled: true
+  spec:
+    port: "8429"
+    selectAllByDefault: true
+    scrapeInterval: 20s
+    extraArgs:
+      promscrape.streamParse: "true"
+      promscrape.dropOriginalLabels: "true"
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - vmagent.monitor.wanaia.org
+defaultDatasources:
+  grafanaOperator:
+    enabled: false
+    annotations: {}
+    spec:
+      instanceSelector:
+        matchLabels:
+          dashboards: grafana
+      allowCrossNamespaceImport: false
+  victoriametrics:
+    perReplica: false
+    datasources:
+      - name: VictoriaMetrics
+        type: prometheus
+        access: proxy
+        isDefault: true
+      - name: VictoriaMetrics (DS)
+        isDefault: false
+        access: proxy
+        type: victoriametrics-metrics-datasource
+        version: "0.15.1"
+  alertmanager:
+    perReplica: false
+    datasources:
+      - name: Alertmanager
+        access: proxy
+        jsonData:
+          implementation: prometheus
+  extra: []
+grafana:
+  enabled: true
+  sidecar:
+    datasources:
+      enabled: true
+      initDatasources: true
+      label: grafana_datasource
+    dashboards:
+      provider:
+        name: default
+        orgid: 1
+      folder: /var/lib/grafana/dashboards
+      defaultFolderName: default
+      enabled: true
+      multicluster: false
+  forceDeployDatasource: false
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - grafana.monitor.wanaia.org
+  vmScrape:
+    enabled: true
+    spec:
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: '{{ include "grafana.name" .Subcharts.grafana }}'
+      endpoints:
+        - port: '{{ .Values.grafana.service.portName }}'
+prometheus-node-exporter:
+  enabled: true
+kube-state-metrics:
+  enabled: true
+kubelet:
+  enabled: true
+kubeApiServer:
+  enabled: true
+kubeControllerManager:
+  enabled: true
+coreDns:
+  enabled: true
+kubeEtcd:
+  enabled: true
+kubeScheduler:
+  enabled: true
+kubeProxy:
+  enabled: true

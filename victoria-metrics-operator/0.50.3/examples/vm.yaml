@@ -4,7 +4,7 @@ metadata:
   name: vmcluster
   namespace: addons
 spec:
-  retentionPeriod: "1" # 保留1个月数据
+  retentionPeriod: "1w" # 保留1周数据
   vmstorage:
     replicaCount: 1
     resources:
@@ -14,17 +14,16 @@ spec:
       limits:
         cpu: 500m
         memory: 1Gi
-    # 使用临时存储，重启会丢失数据
-    # storage:
-    #   volumeClaimTemplate:
-    #     metadata:
-    #       name: data
-    #     spec:
-    #       accessModes: ["ReadWriteOnce"]
-    #       storageClassName: local-storage
-    #       resources:
-    #         requests:
-    #           storage: 20Gi
+    storage:
+      volumeClaimTemplate:
+        metadata:
+          name: data
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          storageClassName: local-path
+          resources:
+            requests:
+              storage: 20Gi
   vmselect:
     replicaCount: 1
     resources:
@@ -102,3 +101,51 @@ spec:
   replicaCount: 1
   remoteWrite:
     - url: "http://vminsert-vmcluster.addons.svc.cluster.local:8480/insert/0/prometheus/api/v1/write"
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMNodeScrape
+metadata:
+  name: node-exporter
+spec:
+  path: /metrics
+  port: "9100"
+  scrape_interval: 15s
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: victoria-metrics-ingress
+  namespace: addons
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: vmselect-vmcluster.wanaia.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vmselect-vmcluster
+                port:
+                  number: 8481
+    - host: vminsert-vmcluster.wanaia.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vminsert-vmcluster
+                port:
+                  number: 8480
+    - host: vmagent.wanaia.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vmagent-vmagent
+                port:
+                  number: 8429

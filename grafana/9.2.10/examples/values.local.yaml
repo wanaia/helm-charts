@@ -1,7 +1,19 @@
+# kubectl create secret -n addons generic grafana-admin-secret --from-literal=admin-user=admin --from-literal=admin-password=EQK.wzn6bxj
 replicas: 1
 createConfigmap: true
 podPortName: grafana
 gossipPortName: gossip
+persistence:
+  type: pvc
+  enabled: true
+  storageClassName: local-path
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
 serviceMonitor:
   enabled: false
 ingress:
@@ -12,9 +24,13 @@ ingress:
   path: /
   pathType: Prefix
   hosts:
-    - grafana.wanaia.local
+    - grafana.wanaia.com
 adminUser: admin
-admin:
-  existingSecret: ""
-  userKey: admin-user
-  passwordKey: admin-password
+adminPassword: admin123
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 472
+  runAsGroup: 472
+  fsGroup: 472
+initChownData:
+  enabled: false

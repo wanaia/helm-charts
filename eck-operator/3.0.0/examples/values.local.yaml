@@ -1,0 +1,68 @@
+managedNamespaces: []
+installCRDs: true
+replicaCount: 1
+resources:
+  limits:
+    cpu: 1
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 150Mi
+createClusterScopedResources: true
+automountServiceAccountToken: true
+tracing:
+  enabled: false
+  config:
+    ELASTIC_APM_SERVER_URL: http://localhost:8200
+    ELASTIC_APM_SERVER_TIMEOUT: 30s
+refs:
+  enforceRBAC: false
+webhook:
+hostNetwork: false
+dnsPolicy: ""
+dnsConfig: {}
+softMultiTenancy:
+  enabled: false
+kubeAPIServerIP: null
+telemetry:
+  disabled: false
+  distributionChannel: "helm"
+config:
+  logVerbosity: "0"
+  metricsPort: 0
+  metrics:
+    port: "0"
+    secureMode:
+      enabled: false
+      tls:
+        certificateSecret: ""
+  containerRegistry: docker.elastic.co
+  maxConcurrentReconciles: "3"
+  caValidity: 8760h
+  caRotateBefore: 24h
+  caDir: ""
+  certificatesValidity: 8760h
+  certificatesRotateBefore: 24h
+  disableConfigWatch: false
+  exposedNodeLabels: [ "topology.kubernetes.io/.*", "failure-domain.beta.kubernetes.io/.*" ]
+  ipFamily: ""
+  setDefaultSecurityContext: "auto-detect"
+  kubeClientTimeout: 60s
+  elasticsearchClientTimeout: 180s
+  validateStorageClass: true
+  enableLeaderElection: true
+  elasticsearchObservationInterval: 10s
+  ubiOnly: false
+podMonitor:
+  enabled: false
+  labels: {}
+  annotations: {}
+  interval: 5m
+  scrapeTimeout: 30s
+  podTargetLabels: []
+  podMetricsEndpointConfig: {}
+serviceMonitor:
+  enabled: true
+  caSecret: ""
+  caMountDirectory: "/etc/prometheus/secrets/"
+  insecureSkipVerify: true
