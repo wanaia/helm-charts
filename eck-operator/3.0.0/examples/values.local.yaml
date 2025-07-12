@@ -17,7 +17,6 @@ tracing:
     ELASTIC_APM_SERVER_TIMEOUT: 30s
 refs:
   enforceRBAC: false
-webhook:
 hostNetwork: false
 dnsPolicy: ""
 dnsConfig: {}
