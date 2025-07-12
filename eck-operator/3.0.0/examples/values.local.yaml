@@ -53,14 +53,6 @@ config:
   enableLeaderElection: true
   elasticsearchObservationInterval: 10s
   ubiOnly: false
-podMonitor:
-  enabled: false
-  labels: {}
-  annotations: {}
-  interval: 5m
-  scrapeTimeout: 30s
-  podTargetLabels: []
-  podMetricsEndpointConfig: {}
 serviceMonitor:
   enabled: true
   caSecret: ""
