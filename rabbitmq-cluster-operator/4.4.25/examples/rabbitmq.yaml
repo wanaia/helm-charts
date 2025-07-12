@@ -1,0 +1,36 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rmq-cluster
+  namespace: middlewares
+spec:
+  image: docker.io/rabbitmq:4.1.2-management
+  replicas: 3
+  service:
+    type: ClusterIP
+  persistence:
+    storageClassName: local-path
+    storage: 5Gi
+  rabbitmq:
+    additionalConfig: |
+      default_user = admin
+      default_pass = admin
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rmq-cluster
+  namespace: middlewares
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: rabbitmq.middleware.waniaia.org
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: rmq-cluster
+                port:
+                  number: 15672

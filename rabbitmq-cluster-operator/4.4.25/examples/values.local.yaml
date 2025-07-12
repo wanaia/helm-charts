@@ -1,0 +1,6 @@
+clusterOperator:
+  watchAllNamespaces: true
+  watchNamespaces: [middlewares, addons]
+  replicaCount: 1
+msgTopologyOperator:
+  enabled: true
