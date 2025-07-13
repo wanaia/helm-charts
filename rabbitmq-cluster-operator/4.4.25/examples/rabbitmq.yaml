@@ -11,6 +11,13 @@ spec:
   persistence:
     storageClassName: local-path
     storage: 5Gi
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
   rabbitmq:
     additionalConfig: |
       default_user = admin
@@ -24,7 +31,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: rabbitmq.middleware.waniaia.org
+    - host: rabbitmq-ui.mq.waniaia.net
       http:
         paths:
           - pathType: Prefix
@@ -34,3 +41,13 @@ spec:
                 name: rmq-cluster
                 port:
                   number: 15672
+    - host: rabbitmq.mq.waniaia.net
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: rmq-cluster
+                port:
+                  number: 5672
