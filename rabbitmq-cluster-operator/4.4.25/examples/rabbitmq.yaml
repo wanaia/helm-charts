@@ -7,7 +7,7 @@ spec:
   image: docker.io/rabbitmq:4.1.2-management
   replicas: 3
   service:
-    type: ClusterIP
+    type: NodePort
   persistence:
     storageClassName: local-path
     storage: 5Gi
@@ -31,7 +31,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: rabbitmq-ui.mq.waniaia.net
+    - host: rabbitmq-ui.mq.wanaia.net
       http:
         paths:
           - pathType: Prefix
@@ -41,13 +41,3 @@ spec:
                 name: rmq-cluster
                 port:
                   number: 15672
-    - host: rabbitmq.mq.waniaia.net
-      http:
-        paths:
-          - pathType: Prefix
-            path: "/"
-            backend:
-              service:
-                name: rmq-cluster
-                port:
-                  number: 5672
