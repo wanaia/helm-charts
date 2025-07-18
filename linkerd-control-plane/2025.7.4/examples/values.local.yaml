@@ -1,27 +1,23 @@
 highAvailability: true
 controlPlaneTracing: false
-controlPlaneTracingNamespace: linkerd-jaeger
+controlPlaneTracingNamespace: addons
 enableEndpointSlices: true
-controllerReplicas: 3
+controllerReplicas: 1
 enablePodDisruptionBudget: true
 identityTrustAnchorsPEM: |
   -----BEGIN CERTIFICATE-----
-  MIIBoDCCAUWgAwIBAgIUVH82T+hFIboMoBUKntRm4aE+304wCgYIKoZIzj0EAwIw
-  JTEjMCEGA1UEAwwacm9vdC5saW5rZXJkLmNsdXN0ZXIubG9jYWwwHhcNMjUwNzE4
-  MTYxNjIzWhcNMzUwNzE2MTYxNjIzWjAlMSMwIQYDVQQDDBpyb290LmxpbmtlcmQu
-  Y2x1c3Rlci5sb2NhbDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABI3mEHU6aqSD
-  z32+PDsj0sKLriiB6tnMRT1V6SMTTDfr5IoQKDgTB1z0m/Uk1yh3rQOFolyEvJKj
-  p6M/h77KlLujUzBRMB0GA1UdDgQWBBTOUWI9g9o4ZbllGfwqIuY3yq26kzAfBgNV
-  HSMEGDAWgBTOUWI9g9o4ZbllGfwqIuY3yq26kzAPBgNVHRMBAf8EBTADAQH/MAoG
-  CCqGSM49BAMCA0kAMEYCIQC03F3eOo5l4VsrVPHQshoBjXZWsWHP78eRh7AzEM+n
-  xwIhAPGvTAFp5NY1HdHyWuC296lwAnoX60YRL7GvxUJb0d+B
+  MIIBjTCCATSgAwIBAgIRAKPhuuqOpOuPQYk14sHnr/owCgYIKoZIzj0EAwIwJTEj
+  MCEGA1UEAxMacm9vdC5saW5rZXJkLmNsdXN0ZXIubG9jYWwwHhcNMjUwNzE4MTg0
+  MzA5WhcNMzUwNzE2MTg0MzA5WjAlMSMwIQYDVQQDExpyb290LmxpbmtlcmQuY2x1
+  c3Rlci5sb2NhbDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABAlKhsEvDu+ZA9eJ
+  s13XK5gtzo53vASJSb5jDKNoz4GwEry90KGZbhanqtiN8A2PF7ktBMYj8pcGAJsf
+  shDGz5ujRTBDMA4GA1UdDwEB/wQEAwIBBjASBgNVHRMBAf8ECDAGAQH/AgEBMB0G
+  A1UdDgQWBBSN/vKsobnQGaFrvLvkJq9rrePDmDAKBggqhkjOPQQDAgNHADBEAiBS
+  C9OeoXJ7NXZSEncRVBIaph48ZcOrTF7BkO5v1jg83wIga1bx5ZsFBHDFamnJYlu3
+  WNZvpqWNhUt196aFnJQ2hL4=
   -----END CERTIFICATE-----
 identityTrustDomain: ""
 proxy:
-  outboundConnectTimeout: 1000ms
-  inboundConnectTimeout: 100ms
-  outboundDiscoveryCacheUnusedTimeout: "5s"
-  inboundDiscoveryCacheUnusedTimeout: "90s"
   resources:
     cpu:
       request: 100m
@@ -42,6 +38,9 @@ proxy:
       endpoint: ""
       meshIdentity:
         serviceAccountName: ""
+proxyInit:
+  runAsRoot: false
+  closeWaitTimeoutSecs: 0
 identity:
   externalCA: false
   serviceAccountTokenProjection: true
@@ -51,21 +50,22 @@ identity:
     tls:
       crtPEM: |
         -----BEGIN CERTIFICATE-----
-        MIIBkzCCATigAwIBAgIUFDKajca2G3y7HGi/f660wt6G2t8wCgYIKoZIzj0EAwIw
-        JTEjMCEGA1UEAwwacm9vdC5saW5rZXJkLmNsdXN0ZXIubG9jYWwwHhcNMjUwNzE4
-        MTYxNjM2WhcNMjYwNzE4MTYxNjM2WjApMScwJQYDVQQDDB5pZGVudGl0eS5saW5r
-        ZXJkLmNsdXN0ZXIubG9jYWwwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQJjF3g
-        hD2wESbOHL27V+zANLGY5nKdzL0NJZADbDrdmO3HUMuQfWzaDOp3aRtA/HwaMfcf
-        RyQcxiMLFGlBCwzpo0IwQDAdBgNVHQ4EFgQUSvk91V4oHElS4g5yXCEz/fCFwVAw
-        HwYDVR0jBBgwFoAUzlFiPYPaOGW5ZRn8KiLmN8qtupMwCgYIKoZIzj0EAwIDSQAw
-        RgIhAMDVuR9UQgtwEO4QtR67GdZgFZtFKCDYwmxwmHAJ86fMAiEAtRnutrb2ywCf
-        Yl/P3cXjkx3Etj0wxGQQ6bYue/WTPm8=
+        MIIBszCCAVmgAwIBAgIRANshb061otIG6mFvfZxfdhwwCgYIKoZIzj0EAwIwJTEj
+        MCEGA1UEAxMacm9vdC5saW5rZXJkLmNsdXN0ZXIubG9jYWwwHhcNMjUwNzE4MTg0
+        MzE3WhcNMjYwNzE4MTg0MzE3WjApMScwJQYDVQQDEx5pZGVudGl0eS5saW5rZXJk
+        LmNsdXN0ZXIubG9jYWwwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQvM0vosNuW
+        7Ff5jaSTrVheylBw+ooNLNZ4VmkvYzfxJJgCOyjMDL/nIhRfDmITRFIsRFAOILJb
+        ogbLB1P3dYYro2YwZDAOBgNVHQ8BAf8EBAMCAQYwEgYDVR0TAQH/BAgwBgEB/wIB
+        ADAdBgNVHQ4EFgQUdJG08rPUNsxYO45J5K7/Qk9XcYQwHwYDVR0jBBgwFoAUjf7y
+        rKG50Bmha7y75Cava63jw5gwCgYIKoZIzj0EAwIDSAAwRQIhALF7ba4yHkUvMk3j
+        bwewp7IJdSsg26e/9ArjAaTGVJhAAiATbvG4oSUJXALWS8v9WoymPR0GmkvYswu9
+        zCFjUS0qEw==
         -----END CERTIFICATE-----
       keyPEM: |
         -----BEGIN EC PRIVATE KEY-----
-        MHcCAQEEIFMEP/8sJSYvMDX0lv06prJG6UuhfCHx9R84N4WUhyv/oAoGCCqGSM49
-        AwEHoUQDQgAECYxd4IQ9sBEmzhy9u1fswDSxmOZyncy9DSWQA2w63Zjtx1DLkH1s
-        2gzqd2kbQPx8GjH3H0ckHMYjCxRpQQsM6Q==
+        MHcCAQEEIL64pfjRsztMDgwnmJPxckJotrRlpZuTvdQP4lf9S2XdoAoGCCqGSM49
+        AwEHoUQDQgAELzNL6LDbluxX+Y2kk61YXspQcPqKDSzWeFZpL2M38SSYAjsozAy/
+        5yIUXw5iE0RSLERQDiCyW6IGywdT93WGKw==
         -----END EC PRIVATE KEY-----
 prometheusUrl: ""
 podMonitor:
@@ -80,9 +80,5 @@ podMonitor:
         - {{ .Release.Namespace }}
         - linkerd-viz
         - linkerd-jaeger
-  serviceMirror:
-    enabled: true
-  proxy:
-    enabled: true
 egress:
   globalEgressNetworkNamespace: linkerd-egress

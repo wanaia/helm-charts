@@ -31,3 +31,33 @@ spec:
   count: 1
   elasticsearchRef:
     name: waniai-elasticsearch
+  config:
+    server.publicBaseUrl: "https://kibana.log.wanaia.net:30443"
+    xpack.security.secureCookies: true
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kibana
+  namespace: addons
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/proxy-ssl-verify: "false"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - kibana.log.wanaia.net
+      secretName: kibana-tls
+  rules:
+    - host: kibana.log.wanaia.net
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: waniai-kibana-kb-http
+                port:
+                  number: 5601

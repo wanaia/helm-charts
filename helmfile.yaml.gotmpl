@@ -24,6 +24,8 @@ releases:
 # COMPONENT_NAME=cert-manager COMPONENT_VERSION=v1.18.2 COMPONENT_NAMESPACE=kube-system helmfile apply -f helmfile.yaml.gotmpl
 # COMPONENT_NAME=victoria-metrics-operator COMPONENT_VERSION=0.50.3 helmfile apply -f helmfile.yaml.gotmpl
 # COMPONENT_NAME=grafana COMPONENT_VERSION=9.2.10 helmfile apply -f helmfile.yaml.gotmpl
+
+
 # COMPONENT_NAME=victoria-metrics-k8s-stack COMPONENT_VERSION=0.56.0 helmfile apply -f helmfile.yaml.gotmpl
 # COMPONENT_NAME=metrics-server COMPONENT_VERSION=3.12.2 helmfile apply -f helmfile.yaml.gotmpl
 # COMPONENT_NAME=eck-operator COMPONENT_VERSION=3.0.0 helmfile apply -f helmfile.yaml.gotmpl
@@ -32,5 +34,6 @@ releases:
 # COMPONENT_NAME=kagent-crds COMPONENT_VERSION=0.4.2 COMPONENT_NAMESPACE=kagent helmfile apply -f helmfile.yaml.gotmpl
 # COMPONENT_NAME=kagent COMPONENT_VERSION=0.4.2 COMPONENT_NAMESPACE=kagent helmfile apply -f helmfile.yaml.gotmpl
 # COMPONENT_NAME=linkerd-crds COMPONENT_VERSION=2025.7.4 helmfile apply -f helmfile.yaml.gotmpl
-# COMPONENT_NAME=linkerd-control-plane COMPONENT_VERSION=2025.7.4 helmfile apply -f helmfile.yaml.gotmpl
-# COMPONENT_NAME=linkerd-viz COMPONENT_VERSION=2025.7.4 helmfile apply -f helmfile.yaml.gotmpl
+# COMPONENT_NAME=linkerd-control-plane COMPONENT_VERSION=2025.7.4 COMPONENT_NAMESPACE=linkerd helmfile apply -f helmfile.yaml.gotmpl
+# COMPONENT_NAME=linkerd-viz COMPONENT_VERSION=2025.7.4 COMPONENT_NAMESPACE=linkerd helmfile apply -f helmfile.yaml.gotmpl
+# COMPONENT_NAME=jaeger-operator COMPONENT_VERSION=2.57.0 helmfile apply -f helmfile.yaml.gotmpl
