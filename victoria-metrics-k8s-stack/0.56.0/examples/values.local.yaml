@@ -219,17 +219,17 @@ vmcluster:
       enabled: true
       ingressClassName: "nginx"
       hosts:
-        - vmstorage.monitor.wanaia.org
+        - vmstorage.monitor.wanaia.net
     select:
       enabled: true
       ingressClassName: "nginx"
       hosts:
-        - vmselect.monitor.wanaia.org
+        - vmselect.monitor.wanaia.net
     insert:
       enabled: true
       ingressClassName: "nginx"
       hosts:
-        - vminsert.monitor.wanaia.org
+        - vminsert.monitor.wanaia.net
 alertmanager:
   enabled: true
   spec:
@@ -254,7 +254,7 @@ alertmanager:
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
-      - alertmanager.monitor.wanaia.org
+      - alertmanager.monitor.wanaia.net
 vmalert:
   enabled: true
   remoteWriteVMAgent: false
@@ -273,7 +273,7 @@ vmalert:
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
-      - vmalert.monitor.wanaia.org
+      - vmalert.monitor.wanaia.net
 vmauth:
   enabled: false
   labels: {}
@@ -306,7 +306,7 @@ vmagent:
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
-      - vmagent.monitor.wanaia.org
+      - vmagent.monitor.wanaia.net
 defaultDatasources:
   grafanaOperator:
     enabled: false
@@ -357,7 +357,7 @@ grafana:
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
-      - grafana.monitor.wanaia.org
+      - grafana.monitor.wanaia.net
   vmScrape:
     enabled: true
     spec:

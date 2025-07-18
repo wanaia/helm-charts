@@ -1,0 +1,13 @@
+linkerdNamespace: linkerd
+createNamespaceMetadataJob: true
+collector:
+  enabled: true
+  replicas: 1
+  config:
+    exporters:
+      jaeger:
+        endpoint: "http://jaeger-operator-jaeger-collector.addons.svc:14268/api/traces"
+        tls:
+          insecure: false
+jaeger:
+  enabled: false
