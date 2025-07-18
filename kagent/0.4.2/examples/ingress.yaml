@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kagent-ui
+  namespace: kagent
+  labels:
+    app.kubernetes.io/name: kagent-ui
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: kagent.llm.wanaia.net
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: kagent
+                port:
+                  number: 80
