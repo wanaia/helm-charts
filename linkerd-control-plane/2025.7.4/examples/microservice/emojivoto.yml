@@ -4,6 +4,7 @@ metadata:
   name: emojivoto
   annotations:
     linkerd.io/inject: enabled
+    config.linkerd.io/trace-collector: collector.linkerd-jaeger:4317
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -127,6 +128,7 @@ spec:
     metadata:
       annotations:
         linkerd.io/inject: enabled
+        config.linkerd.io/trace-collector: collector.linkerd-jaeger:4317
       labels:
         app: vote-bot
         version: v11

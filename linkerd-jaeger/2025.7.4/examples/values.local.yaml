@@ -6,8 +6,8 @@ collector:
   config:
     exporters:
       jaeger:
-        endpoint: "http://jaeger-operator-jaeger-collector.addons.svc:14268/api/traces"
+        endpoint: "jaeger-operator-jaeger-collector.addons.svc:14250"
         tls:
-          insecure: false
+          insecure: true
 jaeger:
   enabled: false

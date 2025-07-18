@@ -1,5 +1,5 @@
 prometheusUrl: "http://vmselect-victoria-metrics-k8s-stack.addons.svc:8481/select/0/prometheus"
-jaegerUrl: "http://jaeger-operator-jaeger-query.addons.svc:16686"
+jaegerUrl: "http://jaeger.sm.wanaia.net:30080"
 prometheus:
   enabled: false
 dashboard:
