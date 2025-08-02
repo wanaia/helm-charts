@@ -1,0 +1,275 @@
+crds:
+  enabled: true
+customRules: {}
+defaultRules:
+  create: true
+  rules:
+    alertmanager: true
+    etcd: true
+    configReloaders: true
+    general: true
+    k8sContainerCpuUsageSecondsTotal: true
+    k8sContainerMemoryCache: true
+    k8sContainerMemoryRss: true
+    k8sContainerMemorySwap: true
+    k8sContainerResource: true
+    k8sContainerMemoryWorkingSetBytes: true
+    k8sPodOwner: true
+    kubeApiserverAvailability: true
+    kubeApiserverBurnrate: true
+    kubeApiserverHistogram: true
+    kubeApiserverSlos: true
+    kubeControllerManager: true
+    kubelet: true
+    kubeProxy: true
+    kubePrometheusGeneral: true
+    kubePrometheusNodeRecording: true
+    kubernetesApps: true
+    kubernetesResources: true
+    kubernetesStorage: true
+    kubernetesSystem: true
+    kubeSchedulerAlerting: true
+    kubeSchedulerRecording: true
+    kubeStateMetrics: true
+    network: true
+    node: true
+    nodeExporterAlerting: true
+    nodeExporterRecording: true
+    prometheus: true
+    prometheusOperator: true
+    windows: true
+  node:
+    fsSelector: 'fstype!=""'
+  disabled: {}
+alertmanager:
+  enabled: true
+  config:
+    global:
+      resolve_timeout: 5m
+    inhibit_rules:
+      - source_matchers:
+          - "severity = critical"
+        target_matchers:
+          - "severity =~ warning|info"
+        equal:
+          - "namespace"
+          - "alertname"
+      - source_matchers:
+          - "severity = warning"
+        target_matchers:
+          - "severity = info"
+        equal:
+          - "namespace"
+          - "alertname"
+      - source_matchers:
+          - "alertname = InfoInhibitor"
+        target_matchers:
+          - "severity = info"
+        equal:
+          - "namespace"
+      - target_matchers:
+          - "alertname = InfoInhibitor"
+    route:
+      group_by: ["namespace"]
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      receiver: "null"
+      routes:
+        - receiver: "null"
+          matchers:
+            - alertname = "Watchdog"
+    receivers:
+      - name: "null"
+    templates:
+      - "/etc/alertmanager/config/*.tmpl"
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - alertmanager.monitor.wanaia.io
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "local-path"
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
+grafana:
+  enabled: true
+  defaultDashboardsEnabled: true
+  adminUser: admin
+  adminPassword: "123456"
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - grafana.monitor.wanaia.io
+kubeApiServer:
+  enabled: true
+  tlsConfig:
+    serverName: kubernetes
+    insecureSkipVerify: false
+  serviceMonitor:
+    enabled: true
+    interval: ""
+    sampleLimit: 0
+    targetLimit: 0
+    labelLimit: 0
+    labelNameLengthLimit: 0
+    labelValueLengthLimit: 0
+    proxyUrl: ""
+    jobLabel: component
+    selector:
+      matchLabels:
+        component: apiserver
+        provider: kubernetes
+    metricRelabelings:
+      - action: drop
+        regex: (etcd_request|apiserver_request_slo|apiserver_request_sli|apiserver_request)_duration_seconds_bucket;(0\.15|0\.2|0\.3|0\.35|0\.4|0\.45|0\.6|0\.7|0\.8|0\.9|1\.25|1\.5|1\.75|2|3|3\.5|4|4\.5|6|7|8|9|15|20|40|45|50)(\.0)?
+        sourceLabels:
+          - __name__
+          - le
+    relabelings: []
+    additionalLabels: {}
+    targetLabels: []
+kubelet:
+  enabled: true
+  namespace: kube-system
+  serviceMonitor:
+    enabled: true
+    kubelet: true
+    attachMetadata:
+      node: false
+    interval: ""
+    honorLabels: true
+    honorTimestamps: true
+    trackTimestampsStaleness: true
+    sampleLimit: 0
+    targetLimit: 0
+    labelLimit: 0
+    labelNameLengthLimit: 0
+    labelValueLengthLimit: 0
+    proxyUrl: ""
+    https: true
+    insecureSkipVerify: true
+    probes: true
+    resource: false
+    resourcePath: "/metrics/resource/v1alpha1"
+    resourceInterval: 10s
+    cAdvisor: true
+    cAdvisorInterval: 10s
+    cAdvisorMetricRelabelings:
+      - sourceLabels: [__name__]
+        action: drop
+        regex: "container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)"
+      - sourceLabels: [__name__]
+        action: drop
+        regex: "container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)"
+      - sourceLabels: [__name__]
+        action: drop
+        regex: "container_memory_(mapped_file|swap)"
+      - sourceLabels: [__name__]
+        action: drop
+        regex: "container_(file_descriptors|tasks_state|threads_max)"
+      - sourceLabels: [__name__, scope]
+        action: drop
+        regex: "container_memory_failures_total;hierarchy"
+      - sourceLabels: [__name__, interface]
+        action: drop
+        regex: "container_network_.*;(cali|cilium|cni|lxc|nodelocaldns|tunl).*"
+      - sourceLabels: [__name__]
+        action: drop
+        regex: "container_spec.*"
+      - sourceLabels: [id, pod]
+        action: drop
+        regex: ".+;"
+    probesMetricRelabelings: []
+    cAdvisorRelabelings:
+      - action: replace
+        sourceLabels: [__metrics_path__]
+        targetLabel: metrics_path
+    probesRelabelings:
+      - action: replace
+        sourceLabels: [__metrics_path__]
+        targetLabel: metrics_path
+    resourceRelabelings:
+      - action: replace
+        sourceLabels: [__metrics_path__]
+        targetLabel: metrics_path
+    metricRelabelings:
+      - action: drop
+        sourceLabels: [__name__, le]
+        regex: (csi_operations|storage_operation_duration)_seconds_bucket;(0.25|2.5|15|25|120|600)(\.0)?
+    relabelings:
+      - action: replace
+        sourceLabels: [__metrics_path__]
+        targetLabel: metrics_path
+    additionalLabels: {}
+    targetLabels: []
+kubeControllerManager:
+  enabled: true
+coreDns:
+  enabled: true
+kubeEtcd:
+  enabled: true
+kubeScheduler:
+  enabled: true
+kubeProxy:
+  enabled: true
+kubeStateMetrics:
+  enabled: true
+kube-state-metrics:
+  rbac:
+    create: true
+  releaseLabel: true
+  prometheusScrape: false
+  selfMonitor:
+    enabled: false
+nodeExporter:
+  enabled: true
+prometheus-node-exporter:
+  namespaceOverride: ""
+  podLabels:
+    jobLabel: node-exporter
+  releaseLabel: true
+  extraArgs:
+    - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+    - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+  service:
+    portName: http-metrics
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
+    labels:
+      jobLabel: node-exporter
+prometheusOperator:
+  enabled: true
+prometheus:
+  enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - prometheus.monitor.wanaia.io
+  prometheusSpec:
+    replicas: 1
+    shards: 1
+    remoteRead: []
+    remoteWrite: []
+    resources: {}
+    maximumStartupDurationSeconds: 60
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "local-path"
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 50Gi
