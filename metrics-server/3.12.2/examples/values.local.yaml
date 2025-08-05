@@ -10,32 +10,11 @@ hostNetwork:
 replicas: 1
 revisionHistoryLimit:
 updateStrategy: {}
-podDisruptionBudget:
-  enabled: false
-  minAvailable:
-  maxUnavailable:
 defaultArgs:
   - --cert-dir=/tmp
   - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
   - --kubelet-use-node-status-port
   - --metric-resolution=15s
-addonResizer:
-  enabled: false
-  resources:
-    requests:
-      cpu: 40m
-      memory: 25Mi
-    limits:
-      cpu: 40m
-      memory: 25Mi
-  nanny:
-    cpu: 0m
-    extraCpu: 1m
-    memory: 0Mi
-    extraMemory: 2Mi
-    minClusterSize: 100
-    pollPeriod: 300000
-    threshold: 5
 metrics:
   enabled: false
 serviceMonitor:
@@ -49,5 +28,3 @@ resources:
   requests:
     cpu: 100m
     memory: 200Mi
-tmpVolume:
-  emptyDir: {}
